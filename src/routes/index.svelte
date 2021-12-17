@@ -21,7 +21,7 @@
 
 <script lang='ts'>
     import TodoItem from "$lib/todo-item.svelte"; // Import file
-import { respond } from "@sveltejs/kit/ssr";
+    import { respond } from "@sveltejs/kit/ssr";
 
     export let todos: Todo[];
 
