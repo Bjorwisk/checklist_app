@@ -1,5 +1,29 @@
-<script>
+<script context='module' lang='ts'>
+    import type { Load } from "@sveltejs/kit";
+    
+    // Tag only get executed once
+    export const load: Load = async ({ fetch }) => {
+        const res = await fetch("./api/todos.json");
+
+        if(res.ok){
+            const todos= await res.json();
+            return {
+                props: { todos }
+            }
+        }
+
+        const { message } = await res.json();
+        return{
+            error: new Error(message)
+        }
+    };
+</script>
+
+<script lang='ts'>
     import TodoItem from "$lib/todo-item.svelte"; // Import file
+import { respond } from "@sveltejs/kit/ssr";
+
+    export let todos: Todo[];
 
     const title = "Todo"; // Variable
 </script>
@@ -18,7 +42,7 @@
     .new input{
         font-size: 28px;
         width: 100%;
-        padding: 0.5em 1em 0.3em, 1em;
+        padding: 15px 15px 15px 15px;
         box-sizing: border-box;
         background: rgba(255, 255, 255, 0.05);
         border-radius: 8px;
@@ -43,11 +67,12 @@
 <div class="todos">
     <h1>{title}</h1>
 
-    <form action = "" method="" class="new">
+    <form action = "/api/todos.json" method="post" class="new">
         <input type="text" name="text" aria-label="Add a todo" placeholder="+ type to add a todo" />
     </form>
 
-    <TodoItem />
-    <TodoItem />
-    <TodoItem />
+    {#each todos as todo}
+     <TodoItem {todo} />
+    {/each}
+   
 </div>
