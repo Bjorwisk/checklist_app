@@ -7,6 +7,7 @@ export const del: RequestHandler = (request) => {
 
 export const patch: RequestHandler<{}, FormData> = (request) => {
   return api(request, {
-    text: request.body.get("patch") // directed from /lib/todo-item.svelte.
-  })
-}
+    text: request.body.get("patch"), // directed from /lib/todo-item.svelte.
+    done: request.body.has("done") ? !!request.body.get("done") : undefined
+  });
+};
