@@ -100,3 +100,10 @@
     {/each}
    
 </div>
+<footer>
+    <small>
+        Built by Azmayen Murshid.<br>
+        All rights reserved. &copy;
+    </small>
+
+</footer>
