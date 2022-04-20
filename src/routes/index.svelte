@@ -102,8 +102,7 @@
 </div>
 <footer>
     <small>
-        Built by Azmayen Murshid.<br>
-        All rights reserved. &copy;
+        Built by Azmayen Murshid.
     </small>
 
 </footer>
