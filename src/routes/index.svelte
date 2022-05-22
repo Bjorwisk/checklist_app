@@ -102,7 +102,7 @@
 </div>
 <footer>
     <small>
-        Built by Azmayen Murshid.
+        Built by Sean Kusumadi.
     </small>
 
 </footer>
