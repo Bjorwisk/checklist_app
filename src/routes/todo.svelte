@@ -101,9 +101,4 @@
     {/each}
    
 </div>
-<footer>
-    <small>
-        Built by Sean Kusumadi.
-    </small>
 
-</footer>
