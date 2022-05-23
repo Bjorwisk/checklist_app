@@ -1,108 +1,52 @@
-<script context='module' lang='ts'>
-    import type { Load } from "@sveltejs/kit";
-    import { enhance } from "$lib/actions/form"
-
-    // Tag only get executed once
-    export const load: Load = async ({ fetch }) => {
-        const res = await fetch("./api/todos.json");
-
-        if(res.ok){
-            const todos= await res.json();
-            return {
-                props: { todos }
-            }
-        }
-
-        const { message } = await res.json();
-        return{
-            error: new Error(message)
-        }
-    };
-</script>
-
-<script lang='ts'>
-    import TodoItem from "$lib/todo-item.svelte"; // Import file
-    import { respond } from "@sveltejs/kit/ssr";
-
-    export let todos: Todo[];
-
-    const title = "Todo"; // Variable
-
-    const processNewTodoResult = async (res: Response, form: HTMLFormElement) => {
-        const newTodo = await res.json();
-        todos = [...todos, newTodo];
-        
-        form.reset();
-    };
-
-    const processUpdatedTodoResult = async (res: Response) => {
-        const updatedTodo = await res.json();
-        todos = todos.map(t => {
-            if (t.uid === updatedTodo.uid) return updatedTodo;
-            return t;
-        })
-    };
-</script>
-
 <style>
-    .todos {
+    .welcome_txt-container{
         width: 100%;
-        max-width: 42rem;
-        margin: 4rem auto 0 auto;
+        display: flex;
+        justify-content: center;
     }
-
-    .new {
-        margin: 0 0 0.5rem 0;
-    }
-
-    .new input{
-        font-size: 28px;
-        width: 100%;
-        padding: 15px 15px 15px 15px;
-        box-sizing: border-box;
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 8px;
+    .welcome_txt-container_component{
+        font-size: 17px;
+        color: whitesmoke;
+        padding-top: 100px;
+        padding-left: 20px;
+        padding-right: 20px;
         text-align: center;
     }
-
-    .todos :global(input){
-        border: 1px solid transparent
+    .login_btn_container{
+        display: flex;
+        justify-content: center;
     }
-
-    .todos :global(input:focus-visible){
-        box-shadow: inset 1px 1px 6px rgba(0,0,0,0.1);
-        border: 1px solid #ff3e00 !important;
-        outline: none;
+    .login_btn{
+        width: 200px;
+        height: 50px;
+        background: none;
+        border: 2px solid whitesmoke;
+        cursor: pointer;
+        margin-top: 50px;
+        border-radius: 20px;
+        color: whitesmoke;
+    }
+    .login_btn:hover{
+        filter: blur(1px);
+    }
+    @media (max-width: 720px) {
+        .login_btn:hover{
+            filter: none;
+        }
     }
 </style>
 
-<svelte:head>
-    <title>{title}</title>
-</svelte:head>
-
-<div class="todos">
-    <h1>{title}</h1>
-
-    <form action = "/api/todos.json" method="post" class="new" use:enhance={{
-        result:processNewTodoResult
-    }}>
-        <input type="text" name="text" aria-label="Add a todo" placeholder="+ type to add a todo" />
-    </form>
-
-    {#each todos as todo}
-     <TodoItem 
-        {todo} 
-        processDeletedTodoResult={() =>{
-         todos = todos.filter(t => t.uid !== todo.uid);
-     }} 
-     {processUpdatedTodoResult}
-     />
-    {/each}
-   
+<h1 style="padding-top: 100px; color: whitesmoke">Welcome</h1>
+<div class="welcome_txt-container">
+    <p class="welcome_txt-container_component">
+        Check list app allows you to stay on track with your tasks! log in and try out the application to get ahead of your work!
+    </p>
 </div>
-<footer>
-    <small>
-        Built by Sean Kusumadi.
-    </small>
-
-</footer>
+<a href='./login'>
+    <div class="login_btn_container">
+       <button class="login_btn">
+            Log in
+        </button> 
+    </div>
+    
+</a>
