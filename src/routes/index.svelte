@@ -20,10 +20,11 @@
         width: 200px;
         height: 50px;
         background: none;
-        border: 2px solid black;
+        border: 2px solid whitesmoke;
         cursor: pointer;
         margin-top: 50px;
         border-radius: 20px;
+        color: whitesmoke;
     }
     .login_btn:hover{
         filter: blur(1px);
